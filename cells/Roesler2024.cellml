@@ -171,9 +171,9 @@
         <variable name="ib" public_interface="in" units="pA_per_pF"/>
         <variable name="icl" public_interface="in" units="pA_per_pF"/>
         <variable cmeta:id="P4" initial_value="14" name="P4" public_interface="out" units="nM_per_L"/>
-        <!-- Progesterone levels during estrus ME 28; DE 15; PRO 30; E 14;-->
+        <!-- Progesterone levels during estrus ME 22; DE 15; PRO 30; E 14;-->
         <variable cmeta:id="E2" initial_value="45" name="E2" public_interface="out" units="nM_per_L"/>
-        <!-- Estradiol levels during estrus ME 43; DE 74; PRO 85; E 45;-->
+        <!-- Estradiol levels during estrus ME 43; DE 70; PRO 80; E 45;-->
         <variable initial_value="53" name="P4_max" public_interface="out" units="nM_per_L"/>
         <variable initial_value="140" name="E2_max" public_interface="out" units="nM_per_L"/>
         <variable name="mod_E2" public_interface="out" units="dimensionless"/>
