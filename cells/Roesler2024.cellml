@@ -76,11 +76,11 @@
     <component name="environment">
         <variable name="time" public_interface="out" units="msec"/>
     </component>
-    <component cmeta:id="stimulus_protocol" name="stimulus_protocol">
+    <!--component cmeta:id="stimulus_protocol" name="stimulus_protocol">
         <variable name="I_stim" public_interface="out" units="pA_per_pF"/>
         <variable name="time" public_interface="in" units="msec"/>
         <variable initial_value="2000" name="stim_start" units="msec"/>
-        <variable initial_value="2000" name="stim_duration" units="msec"/>
+        <variable initial_value="4000" name="stim_duration" units="msec"/>
         <variable initial_value="-0.5" name="stim_current" units="pA_per_pF"/>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply id="stimulus_calculation">
@@ -105,6 +105,45 @@
                                     <ci>stim_duration</ci>
                                 </apply>
                             </apply>
+                        </apply>
+                    </piece>
+                    <otherwise>
+                        <cn cellml:units="pA_per_pF">0.0</cn>
+                    </otherwise>
+                </piecewise>
+            </apply>
+        </math>
+    </component-->
+    <component cmeta:id="stimulus_protocol" name="stimulus_protocol">
+        <variable name="I_stim" public_interface="out" units="pA_per_pF"/>
+        <variable name="time" public_interface="in" units="msec"/>
+        <variable initial_value="2000" name="stim_start" units="msec"/>
+        <variable initial_value="10000" name="stim_period" units="msec"/>
+        <variable initial_value="4000" name="stim_duration" units="msec"/>
+        <variable initial_value="-0.25" name="stim_current" units="pA_per_pF"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply id="stimulus_calculation">
+                <eq/>
+                <ci>I_stim</ci>
+                <piecewise>
+                    <piece>
+                        <cn cellml:units="pA_per_pF">0.0</cn>
+                        <apply>
+                            <lt/>
+                            <ci>time</ci>
+                            <ci>stim_start</ci>
+                        </apply>
+                    </piece>
+                    <piece>
+                        <ci>stim_current</ci>
+                        <apply>
+                            <lt/>
+                            <apply>
+                                <rem/>
+                                <ci>time</ci>
+                                <ci>stim_period</ci>
+                            </apply>
+                            <ci>stim_duration</ci>
                         </apply>
                     </piece>
                     <otherwise>
