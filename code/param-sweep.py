@@ -21,6 +21,9 @@ if __name__ == "__main__":
 	parser.add_argument("end_val", type=float, metavar="end-value",
 		help="value to end the sweep at")
 	parser.add_argument("step", type=float, help="step size for the parameter sweep")
+	parser.add_argument("--estrus", type=str,  default="estrus",
+		choices={"estrus", "metestrus", "proestrus", "diestrus"}, 
+		help="estrus stage")
 
 	# Parse input arguments
 	args = parser.parse_args()
@@ -53,4 +56,4 @@ if __name__ == "__main__":
 			args.param))	
 		exit(1)
 		
-	breakpoint()	
+
