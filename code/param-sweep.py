@@ -10,6 +10,7 @@ import sys
 import argparse
 import numpy as np
 import Roesler2024
+import functions
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description=
@@ -56,4 +57,3 @@ if __name__ == "__main__":
 			args.param))	
 		exit(1)
 		
-
