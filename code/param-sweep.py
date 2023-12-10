@@ -52,11 +52,14 @@ if __name__ == "__main__":
 		exit(1)
 
 	# Original model solution
-	orig_voi, _, _ = Roesler2024.solveModel(init_states, constants) 
+	print("Computing original simulation")
+	orig_voi, orig_states, _ = Roesler2024.solveModel(init_states, constants)
+	nb_points = int(np.round((args.end_val - args.start_val) / args.step)) + 1
+	l2_points = np.zeros(nb_points)
+	values = np.arange(args.start_val, args.end_val + args.step, args.step)
 
-	l2_points = np.zeros((np.ceil(( # Create vector for L2 norms
-		args.end_val - args.start_val) / args.step)), 1)
-
-	breakpoint()	
-	for i in range(args.start_val, args.end_val, args.step):
-		voi, _, _ = Roesler2024.solveModel(init_states, constants)		
+	for i, value in enumerate(values):
+		print("Computing simulation {}".format(i))
+		constants[idx] = value
+		_, states, _ = Roesler2024.solveModel(init_states, constants)		
+		l2_points[i] = functions.computeL2Norm(orig_states, states)
