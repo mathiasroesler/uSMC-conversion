@@ -45,7 +45,7 @@ def setParams(constants, legend_constants, param, value):
 			found = True
 			idx = i
 
-			if value != None
+			if value != None:
 				constants[i] = value
 
 			break
