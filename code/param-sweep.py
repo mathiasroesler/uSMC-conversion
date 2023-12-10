@@ -39,21 +39,19 @@ if __name__ == "__main__":
 	init_states, constants = Roesler2024.initConsts()
 	_, _, _, legend_constants = Roesler2024.createLegends()
 
-	found = False # Used to check if param exists
-
-	for i, legend in enumerate(legend_constants):
-		words = legend.split(' ') # Split to get the constant name
-
-		if words[0] == args.param:
-			idx = i
-			found = True
-			break
+	constants = functions.setEstrusParams(constants, legend_constants, 
+		args.estrus)
 
 	try:
-		assert(found)
+		_, idx = functions.setParams(constants, legend_constants, 
+			args.param, None)
 
-	except AssertionError:
-		sys.stderr.write("Error: {} was not found in parameter list\n".format(
+	except IndexError:
+		sys.stderr.write("Error: parameter sweep for {} can't be done\n".format(
 			args.param))	
 		exit(1)
-		
+	
+	orig_voi, _, _ = Roesler2024.solveModel() # Original model solution
+
+	l2_points = np.zeros((np.ceil(( # Create vector for L2 norms
+		args.end_val - args.start_val) / args.step)), 1)
