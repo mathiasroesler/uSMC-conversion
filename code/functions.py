@@ -18,6 +18,36 @@ ESTRUS = {
 	}
 
 
+def setParams(constants, legend_constants, param, value):
+	""" Sets the new value for the specified parameter
+
+	Arguments:
+	constants -- list[int], list of constant values.
+	legend_constants -- list[str], list of legends for constants.
+	param -- str, name of the parameter to change.
+	value -- float, new value for the parameter.
+
+	Return:
+	updated_constants -- list[int], list of updated constant values.
+
+	"""
+	found = False
+
+	for i, legend in enumerate(legend_constants):
+		words = legend.split(' ')
+
+		if words[0] == param:
+			constants[i] = value
+			found = True
+			break
+
+	if not found:
+		sys.stderr.write("Warning: {} was not found in parameter list\n".format(
+			key))	
+	
+	return constants
+
+
 def setEstrusParams(constants, legend_constants, estrus):
 	""" Sets the specific values of the constants for the estrus stage
 
@@ -40,19 +70,8 @@ def setEstrusParams(constants, legend_constants, estrus):
 		exit(1)
 
 	for key in ESTRUS[estrus].keys():
-		found = False
-	
-		for i, legend in enumerate(legend_constants):
-			words = legend.split(' ')
-
-			if words[0] == key:
-				constants[i] = ESTRUS[estrus][key]
-				found = True
-				break
-
-		if not found:
-			sys.stderr.write("Warning: {} was not found in parameter list\n".format(
-				key))	
+		constants = setParams(constants, legend_constants, 
+			key, ESTRUS[estrus][key])
 		
 	return constants
 
