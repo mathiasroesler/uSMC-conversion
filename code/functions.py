@@ -21,6 +21,8 @@ ESTRUS = {
 def setParams(constants, legend_constants, param, value):
 	""" Sets the new value for the specified parameter
 
+	Raises an IndexError if the parameter was not found in the list.
+
 	Arguments:
 	constants -- list[int], list of constant values.
 	legend_constants -- list[str], list of legends for constants.
@@ -50,7 +52,8 @@ def setParams(constants, legend_constants, param, value):
 
 	if not found:
 		sys.stderr.write("Warning: {} was not found in parameter list\n".format(
-			key))	
+			param))	
+		raise IndexError
 	
 	return constants, idx
 
@@ -77,8 +80,13 @@ def setEstrusParams(constants, legend_constants, estrus):
 		exit(1)
 
 	for key in ESTRUS[estrus].keys():
-		constants, _ = setParams(constants, legend_constants, 
-			key, ESTRUS[estrus][key])
+		try:
+			constants, _ = setParams(constants, legend_constants, 
+				key, ESTRUS[estrus][key])
+
+		except IndexError:
+			sys.stderr.write("Warning: {} estrus parameter not set\n".format(
+				key))
 		
 	return constants
 
