@@ -50,8 +50,13 @@ if __name__ == "__main__":
 		sys.stderr.write("Error: parameter sweep for {} can't be done\n".format(
 			args.param))	
 		exit(1)
-	
-	orig_voi, _, _ = Roesler2024.solveModel() # Original model solution
+
+	# Original model solution
+	orig_voi, _, _ = Roesler2024.solveModel(init_states, constants) 
 
 	l2_points = np.zeros((np.ceil(( # Create vector for L2 norms
 		args.end_val - args.start_val) / args.step)), 1)
+
+	breakpoint()	
+	for i in range(args.start_val, args.end_val, args.step):
+		voi, _, _ = Roesler2024.solveModel(init_states, constants)		
