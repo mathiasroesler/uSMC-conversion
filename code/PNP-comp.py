@@ -7,12 +7,11 @@
 
 import os
 import sys
-import argparse
-import pickle
 import numpy as np
 import Roesler2024
 import Means2022
 import functions
+import plots
 
 if __name__ == "__main__":
 	init_states_M, constants_M = Means2022.initConsts()
@@ -33,3 +32,5 @@ if __name__ == "__main__":
 		voi_R, states_R, _ = Roesler2024.solveModel(init_states_R, constants_R)
 		l2_points[i] = functions.computeL2Norm(states_M, states_R)
 
+
+	plots.plotPNPComp(l2_points)
