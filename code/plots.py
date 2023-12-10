@@ -44,7 +44,7 @@ def plotPNPComp(l2_points):
 	plt.xticks(ticks=[1, 2, 3, 4],
 		labels=["Proestrus", "Estrus", "Metestrus", "Diestrus"])
 
-	plt.ylabel("L2 norm")
+	plt.ylabel("Normalized L2 norm")
 	plt.show()
 
 
@@ -74,5 +74,5 @@ def plotParamSweep(param):
 
 	plt.legend(["Proestrus", "Estrus", "Metestrus", "Diestrus"])
 	plt.xlabel(PARAM[param] + r' values (pA.pF$^{-1}$)')
-	plt.ylabel("L2 norm")
+	plt.ylabel("Normalized L2 norm")
 	plt.show()

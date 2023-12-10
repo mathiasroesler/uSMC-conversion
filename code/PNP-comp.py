@@ -32,5 +32,5 @@ if __name__ == "__main__":
 		voi_R, states_R, _ = Roesler2024.solveModel(init_states_R, constants_R)
 		l2_points[i] = functions.computeL2Norm(states_M, states_R)
 
-
-	plots.plotPNPComp(l2_points)
+	# Plot normalized Euclidean distances
+	plots.plotPNPComp(l2_points / max(l2_points))

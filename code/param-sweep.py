@@ -79,7 +79,7 @@ if __name__ == "__main__":
 		output_file = open("../res/{}_{}_sweep.pkl".format(
 			args.param, estrus), 'wb')
 
-		pickle.dump([l2_points, values], output_file)
+		pickle.dump([l2_points / max(l2_points), values], output_file)
 
 		output_file.close()
 
