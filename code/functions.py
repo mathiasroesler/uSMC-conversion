@@ -55,3 +55,17 @@ def setEstrusParams(constants, legend_constants, estrus):
 				key))	
 		
 	return constants
+
+
+def computeL2Norm(v1, v2):
+	""" Computes the Euclidean distance between v1 and v2
+	
+	Arguments:
+	v1 -- np.array, first vector.
+	v2 -- np.array, second vector. 
+
+	Return:
+	l2 -- float, Euclidean distance.
+
+	"""
+	return np.linalg.norm(v1-v2)
