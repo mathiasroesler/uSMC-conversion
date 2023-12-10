@@ -1,3 +1,6 @@
 # Ignore Python stuff
 code/__pycache__
 code/*.swp
+
+# Ignore results
+res/
