@@ -25,27 +25,34 @@ def setParams(constants, legend_constants, param, value):
 	constants -- list[int], list of constant values.
 	legend_constants -- list[str], list of legends for constants.
 	param -- str, name of the parameter to change.
-	value -- float, new value for the parameter.
+	value -- float, new value for the parameter, if None the value
+		is not updated.
 
 	Return:
 	updated_constants -- list[int], list of updated constant values.
+	idx -- int, index of the parameter.
 
 	"""
 	found = False
+	idx = 0
 
 	for i, legend in enumerate(legend_constants):
 		words = legend.split(' ')
 
 		if words[0] == param:
-			constants[i] = value
 			found = True
+			idx = i
+
+			if value != None
+				constants[i] = value
+
 			break
 
 	if not found:
 		sys.stderr.write("Warning: {} was not found in parameter list\n".format(
 			key))	
 	
-	return constants
+	return constants, idx
 
 
 def setEstrusParams(constants, legend_constants, estrus):
@@ -70,7 +77,7 @@ def setEstrusParams(constants, legend_constants, estrus):
 		exit(1)
 
 	for key in ESTRUS[estrus].keys():
-		constants = setParams(constants, legend_constants, 
+		constants, _ = setParams(constants, legend_constants, 
 			key, ESTRUS[estrus][key])
 		
 	return constants
