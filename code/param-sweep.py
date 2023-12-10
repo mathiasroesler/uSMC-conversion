@@ -8,6 +8,7 @@
 import os
 import sys
 import argparse
+import pickle
 import numpy as np
 import Roesler2024
 import functions
@@ -63,3 +64,11 @@ if __name__ == "__main__":
 		constants[idx] = value
 		_, states, _ = Roesler2024.solveModel(init_states, constants)		
 		l2_points[i] = functions.computeL2Norm(orig_states, states)
+
+	print("Writing results")
+	output_file = open("../res/{}_{}_sweep.pkl".format(
+		args.param, args.estrus), 'wb')
+
+	pickle.dump(l2_points, output_file)
+
+	output_file.close()
