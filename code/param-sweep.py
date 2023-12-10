@@ -83,5 +83,7 @@ if __name__ == "__main__":
 
 		output_file.close()
 
+		init_states, constants = Roesler2024.initConsts() # Reset constants
+
 	if args.estrus == "all":
 		plots.plotParamSweep(args.param)
