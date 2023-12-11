@@ -53,12 +53,13 @@ def plotPNPComp(metric):
 	plt.show()
 
 
-def plotParamSweep(param):
+def plotParamSweep(param, metric):
 	""" Plots the L2 data from different stages of the estrus for 
 	a given parameter
 
 	Arguments:
 	param -- str, name of the parameter to use.
+	metric -- str, name of the used metric, {l2, rmse, mae}.
 
 	Return:
 
@@ -66,8 +67,8 @@ def plotParamSweep(param):
 	fig, ax = plt.subplots(dpi=300)
 
 	for i, key in enumerate(functions.ESTRUS.keys()):
-		input_file = "../res/{}_{}_sweep.pkl".format(
-			param, key)
+		input_file = "../res/{}_{}_{}_sweep.pkl".format(
+			param, key, metric)
 
 		with open(input_file, 'rb') as handler:
 			# Unpack pickled data
