@@ -23,7 +23,10 @@ if __name__ == "__main__":
 		help="value to start the sweep at")
 	parser.add_argument("end_val", type=float, metavar="end-value",
 		help="value to end the sweep at")
-	parser.add_argument("step", type=float, help="step size for the parameter sweep")
+	parser.add_argument("step", type=float,
+		 help="step size for the parameter sweep")
+	parser.add_argument("-m", "--metric", default="l2", 
+		choices={"l2", "rmse", "mae"}, help="comparison metric")
 	parser.add_argument("--estrus", type=str,  default="all",
 		choices={"estrus", "metestrus", "proestrus", "diestrus", "all"}, 
 		help="estrus stage")
@@ -65,23 +68,25 @@ if __name__ == "__main__":
 		# Original model solution
 		print("  Computing original simulation")
 		orig_voi, orig_states, _ = Roesler2024.solveModel(init_states, constants)
+
 		nb_points = int(np.round((args.end_val - args.start_val) / args.step)) + 1
-		l2_points = np.zeros(nb_points)
+		comp_points = np.zeros(nb_points)
 		values = np.arange(args.start_val, args.end_val + args.step, args.step)
 
 		for i, value in enumerate(values):
 			print("    Computing simulation {}".format(i))
 			constants[idx] = value
 			_, states, _ = Roesler2024.solveModel(init_states, constants)		
-			l2_points[i] = functions.computeL2Norm(orig_states, states)
+			comp_points[i] = functions.computeComparison(
+				orig_states, states, args.metric)
 
 		print("  Writing results\n")
-		output_file = open("../res/{}_{}_sweep.pkl".format(
-			args.param, estrus), 'wb')
+		output_file = "../res/{}_{}_{}_sweep.pkl".format(
+			args.param, estrus, args.metric)
 
-		pickle.dump([l2_points / max(l2_points), values], output_file)
+		with open(output_file, 'wb') as handler:
+			pickle.dump([comp_points / max(comp_points), values], handler)
 
-		output_file.close()
 
 		init_states, constants = Roesler2024.initConsts() # Reset constants
 
