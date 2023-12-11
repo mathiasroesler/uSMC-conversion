@@ -9,6 +9,7 @@ import os
 import sys
 import argparse
 import numpy as np
+import pickle
 import Roesler2024
 import Means2022
 import functions
@@ -49,5 +50,11 @@ if __name__ == "__main__":
 			case "mae":
 				comp_points[i] = functions.computeMAE(states_M, states_R)	
 
+	output_file = "../res/{}_comp.pkl".format(args.metric)
+
+	with open(output_file, 'wb') as handler:
+		# Pickle data
+		pickle.dump(comp_points / max(comp_points), handler)
+
 	# Plot normalized Euclidean distances
-	plots.plotPNPComp(comp_points / max(comp_points))
+	plots.plotPNPComp(args.metric)
