@@ -132,3 +132,27 @@ def computeRMSE(v1, v2):
 	"""
 	return np.sqrt(np.mean((v1 - v2)**2))
 
+
+def computeComparison(v1, v2, metric):
+	""" Computes the comparison between v1 and v2 based on the metric
+
+	Arguments:
+	v1 -- np.array, first vector.
+	v2 -- np.array, second vector. 
+	metric -- str, comparison metric, option are l2, rmse, and mae.
+
+	Return:
+	comp_point -- float, comparison point.
+
+	"""
+	match metric:
+		case "l2":
+			return computeL2Norm(v1, v2)
+
+		case "rmse":
+			return computeRMSE(v1, v2)
+
+		case "mae":
+			return computeMAE(v1, v2)	
+
+
