@@ -26,25 +26,30 @@ PARAM = {
 	"gna": r'g$_{Na}$'
 	}
 
-def plotPNPComp(l2_points):
+def plotPNPComp(metric):
 	""" Plots the pregnant and non-pregnant comparison results
 
 	Arguments:
-	l2_points -- np.array(float), array of Euclidean norms for each stage
-		of the estrus cycle.
+	metric -- str, metric use for comparison to load the correct data.
 	
 	Return:
 
 	"""
 	fig, ax = plt.subplots(dpi=300)
+
+	input_file = "../res/{}_comp.pkl".format(metric)
+
+	with open(input_file, 'rb') as handler:
+			# Unpack pickled data
+			pickled_data = pickle.load(handler)
 	
-	plt.plot(np.arange(1, 5), l2_points, '.b')
+	plt.plot(np.arange(1, 5), pickled_data, '.b')
 
 	# Reset x-axis ticks
 	plt.xticks(ticks=[1, 2, 3, 4],
 		labels=["Proestrus", "Estrus", "Metestrus", "Diestrus"])
 
-	plt.ylabel("Normalized L2 norm")
+	plt.ylabel("Normalized {}".upper())
 	plt.show()
 
 
