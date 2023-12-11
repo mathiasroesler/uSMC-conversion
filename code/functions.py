@@ -64,8 +64,8 @@ def setEstrusParams(constants, legend_constants, estrus):
 	Arguments:
 	constants -- list[int], list of constant values.
 	legend_constants -- list[str], list of legends for constants.
-	estrus -- str, estrus stage, values are proestrus, estrus, 
-		metestrus, diestrus.
+	estrus -- str, estrus stage, 
+		{all, proestrus, estrus, metestrus, diestrus}.
 
 	Return:
 	updated_constants -- list[int], list of updated constant values.
