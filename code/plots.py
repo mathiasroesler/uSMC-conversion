@@ -32,6 +32,8 @@ LABELS = {
 	"rmse": "RMSE"
 	}
 
+ESTRUS = ["proestrus", "estrus", "metestrus", "diestrus"]
+
 
 def plotPNPComp(metric):
 	""" Plots the pregnant and non-pregnant comparison results
@@ -88,4 +90,37 @@ def plotParamSweep(param, metric):
 	plt.legend(["Proestrus", "Estrus", "Metestrus", "Diestrus"])
 	plt.xlabel(PARAM[param] + r' values (pA.pF$^{-1}$)')
 	plt.ylabel("Normalized {}".format(LABELS[metric]))
+	plt.show()
+
+
+def plotSimulationOutput(sim_output, metric):
+	""" Plots the output of a non-pregnant simulation and the
+	comparison metric
+
+	Arguments:
+	sim_output -- dict{str: np.array}, dict containing the simulation
+		outputs for each stage in mV and the time stamps in s.
+	metric -- str, name of the used metric, {l2, rmse, mae}.
+
+	Return:
+
+	"""
+	input_file = "../res/{}_comp.pkl".format(metric)
+
+	with open(input_file, 'rb') as handler:
+		comp_points = pickle.load(handler)
+
+	fig, ax = plt.subplots(2, 2, dpi=300, sharex=True, sharey=True)
+
+	cpt = 0
+	t = sim_output["time"]
+
+	for i in range(2):
+		for j in range(2):
+			ax[i, j].plot(t, sim_output[ESTRUS[cpt]], color="black")
+			ax[i, j].text(6, -6, LABELS[metric] + ' ' +  "{:.2f}".format(
+				comp_points[cpt]))
+			cpt += 1
+			
+	# Labels are added on Illustrator	
 	plt.show()
