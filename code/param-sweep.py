@@ -45,6 +45,7 @@ if __name__ == "__main__":
 
 	plot_only = False
 
+	# Error check
 	try:
 		assert(args.start_val < args.end_val)
 
@@ -60,6 +61,7 @@ if __name__ == "__main__":
 		init_states, constants = Roesler2024.initConsts()
 		_, _, _, legend_constants = Roesler2024.createLegends()
 
+		# Error check and index retrival
 		try:
 			_, idx = functions.setParams(constants, legend_constants, 
 				args.param, None)
@@ -70,6 +72,14 @@ if __name__ == "__main__":
 				args.param))	
 			exit(1)
 
+		# Error check
+		try:
+			assert(args.end_val - args.start_val < args.step)	
+
+		except AssertionError:
+			sys.stderr.write("Error: the step is too large\n")
+			exit(1)
+		
 		if args.estrus == "all":
 			plot_only = True
 			estrus_stage = ["proestrus", "estrus", "metestrus", "diestrus"]
