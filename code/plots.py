@@ -22,7 +22,7 @@ COLOURS = {
 PARAM = {
 	"gkv43": r'g$_{Kv4.3}$',
 	"gcal": r'g$_{CaL}$',
-	"gbk": r'g$_{BK}$',
+	"gkca": r'g$_{BK}$',
 	"gna": r'g$_{Na}$'
 	}
 
