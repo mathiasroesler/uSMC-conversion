@@ -43,16 +43,9 @@ if __name__ == "__main__":
 
 			voi_R, states_R, _ = Roesler2024.solveModel(init_states_R, 
 				constants_R)
-
-			match args.metric:
-				case "l2":
-					comp_points[i] = functions.computeL2Norm(states_M, states_R)
-
-				case "rmse":
-					comp_points[i] = functions.computeRMSE(states_M, states_R)
-
-				case "mae":
-					comp_points[i] = functions.computeMAE(states_M, states_R)	
+			
+			comp_points[i] = functions.computeComparison(
+				states_M, states_R, args.metric)
 
 		output_file = "../res/{}_comp.pkl".format(args.metric)
 
