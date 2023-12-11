@@ -139,7 +139,7 @@ def computeComparison(v1, v2, metric):
 	Arguments:
 	v1 -- np.array, first vector.
 	v2 -- np.array, second vector. 
-	metric -- str, comparison metric, option are l2, rmse, and mae.
+	metric -- str, comparison metric, {l2, rmse, mae}
 
 	Return:
 	comp_point -- float, comparison point.
