@@ -26,6 +26,13 @@ PARAM = {
 	"gna": r'g$_{Na}$'
 	}
 
+LABELS = {
+	"l2": "L2-norm",
+	"mae": "MAE",
+	"rmse": "RMSE"
+	}
+
+
 def plotPNPComp(metric):
 	""" Plots the pregnant and non-pregnant comparison results
 
@@ -49,7 +56,7 @@ def plotPNPComp(metric):
 	plt.xticks(ticks=[1, 2, 3, 4],
 		labels=["Proestrus", "Estrus", "Metestrus", "Diestrus"])
 
-	plt.ylabel("Normalized {}".format(metric.upper()))
+	plt.ylabel("Normalized {}".format(LABELS[metric]))
 	plt.show()
 
 
@@ -80,5 +87,5 @@ def plotParamSweep(param, metric):
 
 	plt.legend(["Proestrus", "Estrus", "Metestrus", "Diestrus"])
 	plt.xlabel(PARAM[param] + r' values (pA.pF$^{-1}$)')
-	plt.ylabel("Normalized {}".format(metric.upper()))
+	plt.ylabel("Normalized {}".format(LABELS[metric]))
 	plt.show()
