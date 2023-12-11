@@ -19,22 +19,31 @@ if __name__ == "__main__":
 		"Perform a parameter sweep for a given parameter")
 
 	parser.add_argument("param", type=str, help="name of the parameter")
-	parser.add_argument("start_val", type=float, metavar="start-value",
-		help="value to start the sweep at")
-	parser.add_argument("end_val", type=float, metavar="end-value",
-		help="value to end the sweep at")
-	parser.add_argument("step", type=float,
-		 help="step size for the parameter sweep")
-	parser.add_argument("-m", "--metric", default="l2", 
+	parser.add_argument("metric", type=str,
 		choices={"l2", "rmse", "mae"}, help="comparison metric")
-	parser.add_argument("-p", "--plot-only", action="store_true", 
-		help="flag used just to plot data")
-	parser.add_argument("--estrus", type=str,  default="all",
+
+	# Create subparser for the sweep and plot commands
+	subparser = parser.add_subparsers()
+
+	sweep_subparser = subparser.add_parser("sweep", 
+		help="performs parameter sweep")
+	sweep_subparser.add_argument("start_val", type=float, metavar="start-value",
+		help="value to start the sweep at")
+	sweep_subparser.add_argument("end_val", type=float, metavar="end-value",
+		help="value to end the sweep at")
+	sweep_subparser.add_argument("step", type=float,
+		 help="step size for the parameter sweep")
+	sweep_subparser.add_argument("--estrus", type=str,  default="all",
 		choices={"estrus", "metestrus", "proestrus", "diestrus", "all"}, 
 		help="estrus stage")
 
+	plot_subparser = subparser.add_parser("plot",
+		help="plots results without doing a parameter sweep")
+
 	# Parse input arguments
 	args = parser.parse_args()
+
+	plot_only = False
 
 	try:
 		assert(args.start_val < args.end_val)
@@ -43,25 +52,31 @@ if __name__ == "__main__":
 		sys.stderr.write("Error: start value must be smaller than end value\n")
 		exit(1)
 
-	init_states, constants = Roesler2024.initConsts()
-	_, _, _, legend_constants = Roesler2024.createLegends()
+	except AttributeError:
+		# If the plot command was used
+		plot_only = True
 
-	try:
-		_, idx = functions.setParams(constants, legend_constants, 
-			args.param, None)
+	if not plot_only:
+		init_states, constants = Roesler2024.initConsts()
+		_, _, _, legend_constants = Roesler2024.createLegends()
 
-	except IndexError:
-		sys.stderr.write("Error: parameter sweep for {} can't be done\n".format(
-			args.param))	
-		exit(1)
+		try:
+			_, idx = functions.setParams(constants, legend_constants, 
+				args.param, None)
 
-	if args.estrus == "all":
-		estrus_stage = ["proestrus", "estrus", "metestrus", "diestrus"]
+		except IndexError:
+			sys.stderr.write(
+				"Error: parameter sweep for {} can't be done\n".format(
+				args.param))	
+			exit(1)
 
-	else:
-		estrus_stage = [args.estrus]
+		if args.estrus == "all":
+			plot_only = True
+			estrus_stage = ["proestrus", "estrus", "metestrus", "diestrus"]
 
-	if not args.plot_only:
+		else:
+			estrus_stage = [args.estrus]
+
 		for estrus in estrus_stage:
 			constants = functions.setEstrusParams(constants, legend_constants, 
 				estrus)
@@ -95,5 +110,5 @@ if __name__ == "__main__":
 
 			init_states, constants = Roesler2024.initConsts() # Reset constants
 
-	if args.estrus == "all" or args.plot_only:
+	if plot_only:
 		plots.plotParamSweep(args.param, args.metric)
