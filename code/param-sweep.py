@@ -25,6 +25,7 @@ if __name__ == "__main__":
 	# Create subparser for the sweep and plot commands
 	subparser = parser.add_subparsers()
 
+	# Sweep subcommand arguments
 	sweep_subparser = subparser.add_parser("sweep", 
 		help="performs parameter sweep")
 	sweep_subparser.add_argument("start_val", type=float, metavar="start-value",
@@ -36,7 +37,8 @@ if __name__ == "__main__":
 	sweep_subparser.add_argument("--estrus", type=str,  default="all",
 		choices={"estrus", "metestrus", "proestrus", "diestrus", "all"}, 
 		help="estrus stage")
-
+	
+	# Plot subcommand arguments
 	plot_subparser = subparser.add_parser("plot",
 		help="plots results without doing a parameter sweep")
 
@@ -97,11 +99,13 @@ if __name__ == "__main__":
 			print("  Computing original simulation")
 			_, orig_states, _ = Roesler2024.solveModel(init_states, constants)
 
+			# Preset the size of the comparison points
 			values = np.arange(
 				args.start_val, args.end_val + args.step, args.step)
 			comp_points = np.zeros(len(values))
 
 			for i, value in enumerate(values):
+				# Run the simulations with different values
 				print("    Computing simulation {}".format(i))
 				constants[idx] = value
 				_, states, _ = Roesler2024.solveModel(init_states, constants)
@@ -115,8 +119,8 @@ if __name__ == "__main__":
 			with open(output_file, 'wb') as handler:
 				pickle.dump([comp_points / max(comp_points), values], handler)
 
-
 			init_states, constants = Roesler2024.initConsts() # Reset constants
 
+	# Plot if estrus is all or plot subcommand is used
 	if plot_only:
 		plots.plotParamSweep(args.param, args.metric)
