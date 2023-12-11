@@ -4,3 +4,6 @@ code/*.swp
 
 # Ignore results
 res/
+
+# Ignore backup files
+*.backup
