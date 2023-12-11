@@ -91,4 +91,4 @@ if __name__ == "__main__":
 		init_states, constants = Roesler2024.initConsts() # Reset constants
 
 	if args.estrus == "all":
-		plots.plotParamSweep(args.param)
+		plots.plotParamSweep(args.param, args.metric)
