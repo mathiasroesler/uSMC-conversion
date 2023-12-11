@@ -117,3 +117,18 @@ def computeMAE(v1, v2):
 
 	"""
 	return np.mean(np.abs(v1 - v2))
+
+
+def computeRMSE(v1, v2):
+	""" Computes the Root Mean Squared Error between v1 and v2
+
+	Arguments:
+	v1 -- np.array, first vector.
+	v2 -- np.array, second vector. 
+
+	Return:
+	rmse -- float, root mean square error
+
+	"""
+	return np.sqrt(np.mean((v1 - v2)**2))
+
