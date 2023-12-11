@@ -54,8 +54,8 @@ def plotPNPComp(metric):
 
 
 def plotParamSweep(param, metric):
-	""" Plots the L2 data from different stages of the estrus for 
-	a given parameter
+	""" Plots the comparison data from different stages of the estrus for
+	a given parameter and metric
 
 	Arguments:
 	param -- str, name of the parameter to use.
@@ -73,12 +73,12 @@ def plotParamSweep(param, metric):
 		with open(input_file, 'rb') as handler:
 			# Unpack pickled data
 			pickled_data = pickle.load(handler)
-			l2_points = pickled_data[0]
+			comp_points = pickled_data[0]
 			values = pickled_data[1]
 
-		plt.plot(values, l2_points, COLOURS[key])
+		plt.plot(values, comp_points, COLOURS[key])
 
 	plt.legend(["Proestrus", "Estrus", "Metestrus", "Diestrus"])
 	plt.xlabel(PARAM[param] + r' values (pA.pF$^{-1}$)')
-	plt.ylabel("Normalized L2 norm")
+	plt.ylabel("Normalized {}".format(metric.upper()))
 	plt.show()
