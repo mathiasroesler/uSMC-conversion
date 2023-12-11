@@ -27,6 +27,8 @@ if __name__ == "__main__":
 		 help="step size for the parameter sweep")
 	parser.add_argument("-m", "--metric", default="l2", 
 		choices={"l2", "rmse", "mae"}, help="comparison metric")
+	parser.add_argument("-p", "--plot-only", action="store_true", 
+		help="flag used just to plot data")
 	parser.add_argument("--estrus", type=str,  default="all",
 		choices={"estrus", "metestrus", "proestrus", "diestrus", "all"}, 
 		help="estrus stage")
@@ -59,36 +61,39 @@ if __name__ == "__main__":
 	else:
 		estrus_stage = [args.estrus]
 
-	for estrus in estrus_stage:
-		constants = functions.setEstrusParams(constants, legend_constants, 
-			estrus)
+	if not args.plot_only:
+		for estrus in estrus_stage:
+			constants = functions.setEstrusParams(constants, legend_constants, 
+				estrus)
 
-		print("{} stage".format(estrus.capitalize()))
+			print("{} stage".format(estrus.capitalize()))
 
-		# Original model solution
-		print("  Computing original simulation")
-		orig_voi, orig_states, _ = Roesler2024.solveModel(init_states, constants)
+			# Original model solution
+			print("  Computing original simulation")
+			_, orig_states, _ = Roesler2024.solveModel(init_states, constants)
 
-		nb_points = int(np.round((args.end_val - args.start_val) / args.step)) + 1
-		comp_points = np.zeros(nb_points)
-		values = np.arange(args.start_val, args.end_val + args.step, args.step)
+			nb_points = int(np.round(
+				(args.end_val - args.start_val) / args.step)) + 1
+			comp_points = np.zeros(nb_points)
+			values = np.arange(
+				args.start_val, args.end_val + args.step, args.step)
 
-		for i, value in enumerate(values):
-			print("    Computing simulation {}".format(i))
-			constants[idx] = value
-			_, states, _ = Roesler2024.solveModel(init_states, constants)		
-			comp_points[i] = functions.computeComparison(
-				orig_states, states, args.metric)
+			for i, value in enumerate(values):
+				print("    Computing simulation {}".format(i))
+				constants[idx] = value
+				_, states, _ = Roesler2024.solveModel(init_states, constants)
+				comp_points[i] = functions.computeComparison(
+					orig_states, states, args.metric)
 
-		print("  Writing results\n")
-		output_file = "../res/{}_{}_{}_sweep.pkl".format(
-			args.param, estrus, args.metric)
+			print("  Writing results\n")
+			output_file = "../res/{}_{}_{}_sweep.pkl".format(
+				args.param, estrus, args.metric)
 
-		with open(output_file, 'wb') as handler:
-			pickle.dump([comp_points / max(comp_points), values], handler)
+			with open(output_file, 'wb') as handler:
+				pickle.dump([comp_points / max(comp_points), values], handler)
 
 
-		init_states, constants = Roesler2024.initConsts() # Reset constants
+			init_states, constants = Roesler2024.initConsts() # Reset constants
 
-	if args.estrus == "all":
+	if args.estrus == "all" or args.plot_only:
 		plots.plotParamSweep(args.param, args.metric)
