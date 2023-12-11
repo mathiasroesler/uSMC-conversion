@@ -49,7 +49,7 @@ def plotPNPComp(metric):
 	plt.xticks(ticks=[1, 2, 3, 4],
 		labels=["Proestrus", "Estrus", "Metestrus", "Diestrus"])
 
-	plt.ylabel("Normalized {}".upper())
+	plt.ylabel("Normalized {}".format(metric.upper()))
 	plt.show()
 
 
