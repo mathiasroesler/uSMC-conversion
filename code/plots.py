@@ -120,7 +120,13 @@ def plotSimulationOutput(sim_output, metric):
 			ax[i, j].plot(t, sim_output[ESTRUS[cpt]], color="black")
 			ax[i, j].text(6.5, 0, LABELS[metric] + ' ' +  "{:.2f}".format(
 				comp_points[cpt]))
+			ax[i, j].set_xlim([0, 10])
 			cpt += 1
 			
 	# Labels are added on Illustrator	
+	plt.show()
+
+	fig, ax = plt.subplots(dpi=300)
+	plt.plot(t, sim_output["means"], color="black")
+	plt.xlim([0, 10])
 	plt.show()
