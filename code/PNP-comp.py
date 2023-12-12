@@ -66,7 +66,7 @@ if __name__ == "__main__":
 
 		with open(comp_file, 'wb') as handler:
 			# Pickle data
-			pickle.dump(comp_points / max(comp_points), handler)
+			pickle.dump(comp_points, handler)
 
 		with open(sim_file, 'wb') as handler:
 			# Pickle data
@@ -85,7 +85,7 @@ if __name__ == "__main__":
 
 			with open(comp_file, 'wb') as handler:
 				# Pickle data
-				pickle.dump(comp_points / max(comp_points), handler)
+				pickle.dump(comp_points, handler)
 
 	# Plot normalized Euclidean distances
 	plots.plotSimulationOutput(sim_output, args.metric)
