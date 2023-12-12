@@ -54,9 +54,13 @@ if __name__ == "__main__":
 
 			voi_R, states_R, _ = Roesler2024.solveModel(init_states_R, 
 				constants_R)
+
 			sim_output[key] = states_R[0, :] # Membrane potential for plot
 			comp_points[i] = functions.computeComparison(
 				states_M, states_R, args.metric)
+
+			# Reset the model
+			init_states_R, constants_R = Roesler2024.initConsts()
 
 		sim_output["time"] = voi_R / 1000 # Add timesteps in s
 
