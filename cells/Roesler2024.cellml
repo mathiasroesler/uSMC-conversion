@@ -368,7 +368,7 @@ enddef;-->
         <variable name="ecat" public_interface="out" units="mV"/>
         <variable cmeta:id="gkca" initial_value="2.4" name="gkca" public_interface="out" units="nS_per_pF"/>
         <variable cmeta:id="gb" initial_value="0.004" name="gb" public_interface="out" units="nS_per_pF"/>
-        <variable cmeta:id="gkv43" initial_value="2.2" name="gkv43" public_interface="out" units="nS_per_pF"/>
+        <variable cmeta:id="gkv43" initial_value="2.212" name="gkv43" public_interface="out" units="nS_per_pF"/>
         <variable cmeta:id="gbka" initial_value="0.2" name="gbka" public_interface="out" units="dimensionless"/>
         <variable cmeta:id="gbkab" initial_value="0.1" name="gbkab" public_interface="out" units="dimensionless"/>
         <variable cmeta:id="gcl" initial_value="0.1875" name="gcl" public_interface="out" units="nS_per_pF"/>
