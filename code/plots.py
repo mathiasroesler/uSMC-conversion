@@ -74,6 +74,7 @@ def plotParamSweep(param, metric):
 
 	"""
 	fig, ax = plt.subplots(dpi=300)
+	comp_points = [] # Store the results for each stage
 
 	for i, key in enumerate(functions.ESTRUS.keys()):
 		input_file = "../res/{}_{}_{}_sweep.pkl".format(
@@ -82,10 +83,13 @@ def plotParamSweep(param, metric):
 		with open(input_file, 'rb') as handler:
 			# Unpack pickled data
 			pickled_data = pickle.load(handler)
-			comp_points = pickled_data[0]
-			values = pickled_data[1]
+			comp_points.append(pickled_data[0])
+			values = pickled_data[1] # Assume the values are always the same
 
-		plt.plot(values, comp_points, COLOURS[key])
+	comp_points /= np.max(comp_points) # Normalise the data
+
+	for i, key in enumerate(functions.ESTRUS.keys()):
+		plt.plot(values, comp_points[i], COLOURS[key])
 
 	plt.legend([estrus.capitalize() for estrus in ESTRUS])
 	plt.xlabel(PARAM[param] + r' values (pA.pF$^{-1}$)')
