@@ -76,7 +76,7 @@ if __name__ == "__main__":
 
 		# Error check
 		try:
-			assert(args.end_val - args.start_val < args.step)	
+			assert(args.end_val - args.start_val >= args.step)	
 
 		except AssertionError:
 			sys.stderr.write("Error: the step is too large\n")
