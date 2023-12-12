@@ -192,8 +192,8 @@ def initConsts():
 	constants = [0.0] * sizeConstants; states = [0.0] * sizeStates;
 	constants[0] = 0
 	constants[1] = -0.25
-	constants[2] = 1000
-	constants[3] = 11000
+	constants[2] = 2000
+	constants[3] = 6000
 	states[0] = -53.90915441282156
 	constants[4] = 1.0
 	states[1] = 0.0001161881607214449
