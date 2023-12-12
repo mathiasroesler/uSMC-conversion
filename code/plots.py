@@ -10,7 +10,7 @@ import sys
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
-import functions
+
 
 COLOURS = {
 	"proestrus": '.-r',
@@ -76,9 +76,9 @@ def plotParamSweep(param, metric):
 	fig, ax = plt.subplots(dpi=300)
 	comp_points = [] # Store the results for each stage
 
-	for i, key in enumerate(functions.ESTRUS.keys()):
+	for i, estrus in enumerate(ESTRUS):
 		input_file = "../res/{}_{}_{}_sweep.pkl".format(
-			param, key, metric)
+			param, estrus, metric)
 
 		with open(input_file, 'rb') as handler:
 			# Unpack pickled data
@@ -88,8 +88,8 @@ def plotParamSweep(param, metric):
 
 	comp_points /= np.max(comp_points) # Normalise the data
 
-	for i, key in enumerate(functions.ESTRUS.keys()):
-		plt.plot(values, comp_points[i], COLOURS[key])
+	for i, stage in enumerate(ESTRUS):
+		plt.plot(values, comp_points[i], COLOURS[stage])
 
 	plt.legend([estrus.capitalize() for estrus in ESTRUS])
 	plt.xlabel(PARAM[param] + r' values (pA.pF$^{-1}$)')
