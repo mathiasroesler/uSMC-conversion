@@ -137,7 +137,7 @@ def plotSensitivity(metric):
 	plt.xticks(ticks=values, labels=PARAM.values())
 
 	plt.xlabel("Parameters")
-	plt.ylabel("{} (in mV)".format(LABELS[metric]))
+	plt.ylabel("{} (mV)".format(LABELS[metric]))
 	plt.show()
 
 
