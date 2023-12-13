@@ -211,7 +211,7 @@ def initConsts():
 	constants[11] = 0.058
 	constants[12] = 2.4
 	constants[13] = 0.004
-	constants[14] = 2.2
+	constants[14] = 2.212
 	constants[15] = 0.2
 	constants[16] = 0.1
 	constants[17] = 0.1875

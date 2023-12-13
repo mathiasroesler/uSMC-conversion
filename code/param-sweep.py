@@ -76,7 +76,7 @@ if __name__ == "__main__":
 
 		# Error check
 		try:
-			assert(args.end_val - args.start_val < args.step)	
+			assert(args.end_val - args.start_val >= args.step)	
 
 		except AssertionError:
 			sys.stderr.write("Error: the step is too large\n")
@@ -117,7 +117,7 @@ if __name__ == "__main__":
 				args.param, estrus, args.metric)
 
 			with open(output_file, 'wb') as handler:
-				pickle.dump([comp_points / max(comp_points), values], handler)
+				pickle.dump([comp_points, values], handler)
 
 			init_states, constants = Roesler2024.initConsts() # Reset constants
 

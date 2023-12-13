@@ -11,10 +11,26 @@ import numpy as np
 
 # Specific values for different estrus stages
 ESTRUS = {
-	"proestrus":{"gkv43":1.3, "stim_current":-0.5, "P4":30, "E2":80},
-	"estrus":{"gkv43":2.2, "stim_current":-0.5, "P4":14, "E2":45},
-	"metestrus":{"gkv43":2.3, "stim_current":-0.25, "P4":22, "E2":43},
-	"diestrus":{"gkv43":1.4, "stim_current":-0.5, "P4":74, "E2":15},
+	"proestrus":{"gkv43":1.2, "stim_current":-0.5, "P4":30, "E2":80},
+	"estrus":{"gkv43":2.212, "stim_current":-0.5, "P4":14, "E2":45},
+	"metestrus":{"gkv43":2.3, "stim_current":-0.25, "P4":25, "E2":43},
+	"diestrus":{"gkv43":1.4, "stim_current":-0.5, "P4":15, "E2":70}
+	}
+
+# Hard coded values of the P4 dependent constants
+# Could probably be optimised
+P4_MAP = {
+	"P4": 4,
+	"P4_max": 6,
+	"mod_P4": 25
+	}	
+
+# Hard coded values of the E2 dependent constants
+# Could probably be optimised
+E2_MAP = {
+	"E2": 5,
+	"E2_max": 7,
+	"mod_E2": 24
 	}
 
 
@@ -37,6 +53,20 @@ def setParams(constants, legend_constants, param, value):
 	"""
 	found = False
 	idx = 0
+
+	if param in E2_MAP.keys():
+		# Make sure the E2 modulator is updated
+		constants[E2_MAP[param]] = value
+		constants[E2_MAP["mod_E2"]] = (
+			constants[E2_MAP["E2"]] / constants[E2_MAP["E2_max"]])
+		return constants, E2_MAP[param]
+
+	if param in P4_MAP.keys():
+		# Make sure the P4 modulator is updated
+		constants[P4_MAP[param]] = value
+		constants[P4_MAP["mod_P4"]] = (
+			constants[P4_MAP["P4"]] / constants[P4_MAP["P4_max"]])
+		return constants, P4_MAP[param]
 
 	for i, legend in enumerate(legend_constants):
 		words = legend.split(' ')

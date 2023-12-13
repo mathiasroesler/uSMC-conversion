@@ -80,8 +80,8 @@
     <component name="membrane">
         <variable initial_value="0" name="I_hold" public_interface="none" units="pA_per_pF"/>
         <variable initial_value="-0.25" name="I_test" public_interface="none" units="pA_per_pF"/>
-        <variable initial_value="1000" name="test_start" public_interface="none" units="msec"/>
-        <variable initial_value="11000" name="test_end" public_interface="none" units="msec"/>
+        <variable initial_value="2000" name="test_start" public_interface="none" units="msec"/>
+        <variable initial_value="6000" name="test_end" public_interface="none" units="msec"/>
         <variable cmeta:id="membrane_stimulus_current" name="I_stim" units="pA_per_pF"/>
         <variable name="time" public_interface="in" units="msec"/>
         <variable name="I_tot" units="pA_per_pF"/>

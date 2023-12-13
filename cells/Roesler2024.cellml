@@ -149,7 +149,7 @@ enddef;-->
         <variable name="ib" public_interface="in" units="pA_per_pF"/>
         <variable name="icl" public_interface="in" units="pA_per_pF"/>
         <variable cmeta:id="P4" initial_value="14" name="P4" public_interface="out" units="nM_per_L"/>
-        <!-- Progesterone levels during estrus ME 22; DE 15; PRO 30; E 14;-->
+        <!-- Progesterone levels during estrus ME 25; DE 15; PRO 30; E 14;-->
         <variable cmeta:id="E2" initial_value="45" name="E2" public_interface="out" units="nM_per_L"/>
         <!-- Estradiol levels during estrus ME 43; DE 70; PRO 80; E 45;-->
         <variable initial_value="53" name="P4_max" public_interface="out" units="nM_per_L"/>
@@ -368,7 +368,7 @@ enddef;-->
         <variable name="ecat" public_interface="out" units="mV"/>
         <variable cmeta:id="gkca" initial_value="2.4" name="gkca" public_interface="out" units="nS_per_pF"/>
         <variable cmeta:id="gb" initial_value="0.004" name="gb" public_interface="out" units="nS_per_pF"/>
-        <variable cmeta:id="gkv43" initial_value="2.2" name="gkv43" public_interface="out" units="nS_per_pF"/>
+        <variable cmeta:id="gkv43" initial_value="2.212" name="gkv43" public_interface="out" units="nS_per_pF"/>
         <variable cmeta:id="gbka" initial_value="0.2" name="gbka" public_interface="out" units="dimensionless"/>
         <variable cmeta:id="gbkab" initial_value="0.1" name="gbkab" public_interface="out" units="dimensionless"/>
         <variable cmeta:id="gcl" initial_value="0.1875" name="gcl" public_interface="out" units="nS_per_pF"/>

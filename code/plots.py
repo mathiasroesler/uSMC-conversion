@@ -10,19 +10,19 @@ import sys
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
-import functions
+
 
 COLOURS = {
-	"proestrus": '.-r',
-	"estrus": '.-b',
-	"metestrus": '.-g',
-	"diestrus": '.-k'
+	"proestrus": '.r',
+	"estrus": '.b',
+	"metestrus": '.g',
+	"diestrus": '.k'
 	}
 
 PARAM = {
 	"gkv43": r'g$_{Kv4.3}$',
 	"gcal": r'g$_{CaL}$',
-	"gkca": r'g$_{BK}$',
+	"gkca": r'g$_{KCa}$',
 	"gna": r'g$_{Na}$'
 	}
 
@@ -74,22 +74,70 @@ def plotParamSweep(param, metric):
 
 	"""
 	fig, ax = plt.subplots(dpi=300)
+	comp_points = [] # Store the results for each stage
 
-	for i, key in enumerate(functions.ESTRUS.keys()):
+	for i, estrus in enumerate(ESTRUS):
 		input_file = "../res/{}_{}_{}_sweep.pkl".format(
-			param, key, metric)
+			param, estrus, metric)
 
 		with open(input_file, 'rb') as handler:
 			# Unpack pickled data
 			pickled_data = pickle.load(handler)
-			comp_points = pickled_data[0]
-			values = pickled_data[1]
+			comp_points.append(pickled_data[0])
+			values = pickled_data[1] # Assume the values are always the same
 
-		plt.plot(values, comp_points, COLOURS[key])
+	comp_points /= np.max(comp_points) # Normalise the data
+
+	for i, stage in enumerate(ESTRUS):
+		plt.plot(values, comp_points[i], COLOURS[stage], linestyle='-')
 
 	plt.legend([estrus.capitalize() for estrus in ESTRUS])
 	plt.xlabel(PARAM[param] + r' values (pA.pF$^{-1}$)')
 	plt.ylabel("Normalized {}".format(LABELS[metric]))
+	plt.show()
+
+
+def plotSensitivity(metric):
+	""" Plots the results of the sensitivity analysis for a certain metric
+
+	Arguments:
+	metric -- str, name of the used metric, {l2, rmse, mae}.
+
+	Return:
+
+	"""
+	fig, ax = plt.subplots(dpi=300)
+
+	values = np.arange(len(PARAM)) # x-values for plot
+
+	for i, stage in enumerate(ESTRUS):
+		comp_points = [] # Store the results for each stage
+
+		for j, param in enumerate(PARAM):
+			input_file = "../res/{}_{}_{}_sweep.pkl".format(
+				param, stage, metric)
+
+			with open(input_file, 'rb') as handler:
+				# Unpack pickled data
+				pickled_data = pickle.load(handler)
+				comp_points.append(pickled_data[0])
+
+		mean = np.mean(comp_points, axis=1)			
+		std = np.std(comp_points, axis=1)
+		_, caps, bars = ax.errorbar(values, mean, yerr=std, fmt=COLOURS[stage],
+			linestyle='', capsize=3) 
+
+		# Change cap marker
+		caps[0].set_marker('_')
+		caps[1].set_marker('_')
+
+	plt.legend([estrus.capitalize() for estrus in ESTRUS])
+
+	# Reset x-axis ticks
+	plt.xticks(ticks=values, labels=PARAM.values())
+
+	plt.xlabel("Parameters")
+	plt.ylabel("{} (mV)".format(LABELS[metric]))
 	plt.show()
 
 
@@ -118,9 +166,15 @@ def plotSimulationOutput(sim_output, metric):
 	for i in range(2):
 		for j in range(2):
 			ax[i, j].plot(t, sim_output[ESTRUS[cpt]], color="black")
-			ax[i, j].text(6, -6, LABELS[metric] + ' ' +  "{:.2f}".format(
+			ax[i, j].text(6.4, 0, LABELS[metric] + ' ' +  "{:.2f}".format(
 				comp_points[cpt]))
+			ax[i, j].set_xlim([0, 10])
 			cpt += 1
 			
 	# Labels are added on Illustrator	
+	plt.show()
+
+	fig, ax = plt.subplots(dpi=300)
+	plt.plot(t, sim_output["means"], color="black")
+	plt.xlim([0, 10])
 	plt.show()
