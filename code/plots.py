@@ -22,7 +22,7 @@ COLOURS = {
 PARAM = {
 	"gkv43": r'g$_{Kv4.3}$',
 	"gcal": r'g$_{CaL}$',
-	"gkca": r'g$_{BK}$',
+	"gkca": r'g$_{KCa}$',
 	"gna": r'g$_{Na}$'
 	}
 
@@ -94,6 +94,51 @@ def plotParamSweep(param, metric):
 	plt.legend([estrus.capitalize() for estrus in ESTRUS])
 	plt.xlabel(PARAM[param] + r' values (pA.pF$^{-1}$)')
 	plt.ylabel("Normalized {}".format(LABELS[metric]))
+	plt.show()
+
+
+def plotSensitivity(metric):
+	""" Plots the comparison data from different stages of the estrus for
+	a given parameter and metric
+
+	Arguments:
+	metric -- str, name of the used metric, {l2, rmse, mae}.
+
+	Return:
+
+	"""
+	fig, ax = plt.subplots(dpi=300)
+
+	values = np.arange(len(PARAM)) # x-values for plot
+
+	for i, stage in enumerate(ESTRUS):
+		comp_points = [] # Store the results for each stage
+
+		for j, param in enumerate(PARAM):
+			input_file = "../res/{}_{}_{}_sweep.pkl".format(
+				param, stage, metric)
+
+			with open(input_file, 'rb') as handler:
+				# Unpack pickled data
+				pickled_data = pickle.load(handler)
+				comp_points.append(pickled_data[0])
+
+		mean = np.mean(comp_points, axis=1)			
+		std = np.std(comp_points, axis=1)
+		_, caps, bars = ax.errorbar(values, mean, yerr=std, fmt=COLOURS[stage],
+			linestyle='', capsize=3) 
+
+		# Change cap marker
+		caps[0].set_marker('_')
+		caps[1].set_marker('_')
+
+	plt.legend([estrus.capitalize() for estrus in ESTRUS])
+
+	# Reset x-axis ticks
+	plt.xticks(ticks=values, labels=PARAM.values())
+
+	plt.xlabel("Parameters")
+	plt.ylabel("{} (in mV)".format(LABELS[metric]))
 	plt.show()
 
 
