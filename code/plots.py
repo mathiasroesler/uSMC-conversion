@@ -169,6 +169,7 @@ def plotSimulationOutput(sim_output, metric):
 			ax[i, j].text(6.4, 0, LABELS[metric] + ' ' +  "{:.2f}".format(
 				comp_points[cpt]))
 			ax[i, j].set_xlim([0, 10])
+			ax[i, j].set_title(ESTRUS[cpt])
 			cpt += 1
 			
 	# Labels are added on Illustrator	
