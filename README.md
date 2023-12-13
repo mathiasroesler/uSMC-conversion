@@ -9,6 +9,7 @@
 		1. [***PNP-comp.py*** script](#pnp)
 		2. [***param-sweep.py*** script](#sweep)
 		3. [***sensitivity.py*** script](#sense)
+	3. [Example workflow](#workflow)
 4. [Results](#results)
 
 <a id="general"></a>
@@ -47,14 +48,14 @@ Next, install the required packages with the following command:
 $ pip3 install -r requirements.txt
 ```
 
-Finally, create the *res/* folder in the uSMC-conversion folder to store the results in:
+Finally, create the *res/* directory in the uSMC-conversion directory to store the results in:
 ```bash
 $ mkdir res
 ```
 
 <a id="code"></a>
 ### Running the code
-There are three scripts that can be run, contained in the *code/* folder: 
+There are three scripts that can be run, contained in the *code/* directory: 
 * ***PNP-comp.py***
 * ***param-sweep.py***
 * ***sensitivity.py***
@@ -72,7 +73,7 @@ There are also two optional flags:
 
 **Note:** the script needs to be run once without any flags before being able to use the **-m** and **-p** flags.
 
-When run with no flags, the script will generate two .pkl files in the *res/* folder:
+When run with no flags, the script will generate two .pkl files in the *res/* directory:
 * **sim_output.pkl**, which contains a dictionary with the time steps (in seconds) and the membrane potential values for the pregnant model and each stage of the estrus cycle (in mV)
 * **metric_comp.pkl**, where metric is replaced with one of the metrics, which contains the comparison value between the pregnant and non-pregnant model
 
@@ -80,7 +81,7 @@ The **sim_output.pkl** file is required to use the **-m** flag and generate a  *
 
 **Note:** the estrus stages are always in the same order: proestrus, estrus, metestrus, diestrus.
 
-Run the following command from inside the *code/* folder to view the help message:
+Run the following command from inside the *code/* directory to view the help message:
 ```bash
 $ python3 PNP-comp.py -h
 ```
@@ -100,11 +101,11 @@ The **sweep** sub-command computes the results for different values of the given
 
 The optional flag **--estrus** can be used to compute the sweep for a single estrus stage. The default value is all which computes the sweep for all four stages. 
 
-The **sweep** sub-command will generate .pkl files in the *res/* folder with the following structure **param_stage_metric_sweep.pkl**, where param is replaced with the name of the parameter, stage is replaced with the estrus stage, and metric is replaced with the name of the used metric. The results will be plotted if the **--estrus** flag is set to all.
+The **sweep** sub-command will generate .pkl files in the *res/* directory with the following structure **param_stage_metric_sweep.pkl**, where param is replaced with the name of the parameter, stage is replaced with the estrus stage, and metric is replaced with the name of the used metric. The results will be plotted if the **--estrus** flag is set to all.
 
 The **plot** sub-command plots the results without running the parameter sweep again. It can only be called after the **sweep** command has been used and the .pkl files have been generated. 
 
-Run the following command from inside the *code/* folder to view the help message:
+Run the following command from inside the *code/* directory to view the help message:
 ```bash
 $ python3 param-sweep.py -h
 ```
@@ -125,6 +126,34 @@ $ python3 param-sweep gkv43 rmse plot
 The ***sensitivity.py*** can only be run once the parameter sweeps for every parameter at every estrus stage have been computed with a given metric. The script will plot the average value of the metric and use the standard deviation as error bars to provide an insight on how sensitive the model is for each parameter at different estrus stages. The script has one positional argument, **metric**, the metric to use for comparison (the options can be found in the [***PNP-comp.py***](#pnp) description)
 
 
+<a id="workflow"></a>
+### Example workflow 
+The following set of instructions are an example of how to use the different scripts to generate the sensitivity analysis results. They assume that the [setup](#setup) has been completed.
+
+Navigate to the *code/* directory from the uSMC-conversion directory:
+```
+$ cd code
+```
+
+Run the [***PNP-comp.py***](#pnp) script to view the output of the pregnant and non-pregnant models using the RMSE metric:
+```
+$ python3 PNP-comp.py rmse
+```
+**Note:** the **-p** and **-m** flags of the [***PNP-comp.py***](#pnp) script can now be used.
+
+Use the [***param-sweep.py***](#sweep) script to run the parameter sweeps for all four parameters. The ranges provided here compute 21 simulations for each parameter at each stage using the RMSE metric:
+```
+$ python3 param-sweep.py gcal rmse sweep 0.17 0.6 0.0215
+$ python3 param-sweep.py gna rmse sweep 0.014 0.0625 0.002425
+$ python3 param-sweep.py gkca rmse sweep 2.0 3.0 0.05
+$ python3 param-sweep.py gkv43 rmse sweep 1.2 2.6 0.07
+```
+**Note:** the plot sub-command of the [***param-sweep.py***](#sweep) script can now be used.\
+Plot the sensitivity analysis results with the [***sensitivity.py***](#sense) script:
+```
+$ python3 senstivitiy.py rmse
+```
+
 
 <a id="results"></a>
 ## Results
@@ -134,5 +163,5 @@ Below is the plot generated from the [***PNP-comp.py***](#pnp) script using the 
 Below is the plot generated from the [***param-sweep.py***](#sweep) script for the gkv43 parameter with the RMSE metric which compares the simulation output of the non-pregnant model with different values of gkv43 with the default value at all stages of the estrus cycle.
 ![alt text](fig/gkv43_rmse_sweep.png "Example of the plot from the param-sweep.py script for the gkv43 parameter using the RMSE metric")
 
-Below is the plot generated from the [***sensitivity.py***](#sweep) with the RMSE metric which plots the mean value of the metric and the standard deviation for each parameter sweep at every stage of the estrus.
+Below is the plot generated from the [***sensitivity.py***](#sense) with the RMSE metric which plots the mean value of the metric and the standard deviation for each parameter sweep at every stage of the estrus.
 ![alt text](fig/sensitivity.png "Example of the plot from the sensitivity.py script using the RMSE metric")
