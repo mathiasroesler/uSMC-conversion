@@ -13,10 +13,10 @@ import matplotlib.pyplot as plt
 
 
 COLOURS = {
-	"proestrus": '.-r',
-	"estrus": '.-b',
-	"metestrus": '.-g',
-	"diestrus": '.-k'
+	"proestrus": '.r',
+	"estrus": '.b',
+	"metestrus": '.g',
+	"diestrus": '.k'
 	}
 
 PARAM = {
@@ -89,7 +89,7 @@ def plotParamSweep(param, metric):
 	comp_points /= np.max(comp_points) # Normalise the data
 
 	for i, stage in enumerate(ESTRUS):
-		plt.plot(values, comp_points[i], COLOURS[stage])
+		plt.plot(values, comp_points[i], COLOURS[stage], linestyle='-')
 
 	plt.legend([estrus.capitalize() for estrus in ESTRUS])
 	plt.xlabel(PARAM[param] + r' values (pA.pF$^{-1}$)')
