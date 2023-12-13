@@ -8,6 +8,7 @@
 	2. [Running the code](#code)
 		1. [***PNP-comp.py*** script](#pnp)
 		2. [***param-sweep.py*** script](#sweep)
+		3. [***sensitivity.py*** script](#sense)
 4. [Results](#results)
 
 <a id="general"></a>
@@ -53,13 +54,14 @@ $ mkdir res
 
 <a id="code"></a>
 ### Running the code
-There are two scripts that can be run, contained in the *code/* folder: 
+There are three scripts that can be run, contained in the *code/* folder: 
 * ***PNP-comp.py***
 * ***param-sweep.py***
+* ***sensitivity.py***
 
 <a id="pnp"></a>
 #### ***PNP-comp.py*** script
-The ***PNP-comp.py*** compares the simulation outputs of the pregnant and the non-pregnant cell models. The script has one positional argument, metric, that selects the comparison metric to use. Currently, the options are:
+The ***PNP-comp.py*** compares the simulation outputs of the pregnant and the non-pregnant cell models. The script has one positional argument, **metric**, that selects the comparison metric to use. Currently, the options are:
 * **mae**, for Mean Absolute Error
 * **rmse**, for Root Mean Squared Error
 * **l2**, for L2-norm
@@ -88,7 +90,7 @@ $ python3 PNP-comp.py -h
 #### ***param-sweep.py*** script
 The ***param-sweep.py*** performs a parameter sweep for a given parameter and uses the provided metric to compare the results with the default simulation of the non-pregnant model at the same estrus stage. The script has two positional arguments:
 * **param**, the name of the parameter to change, if the specified parameter is not in the parameter list, an error is thrown
-* **metric**, the metric to use for comparison (the option can be found in the [***PNP-comp.py***](#pnp) description)
+* **metric**, the metric to use for comparison (the options can be found in the [***PNP-comp.py***](#pnp) description)
 
 The script has two sub-commands: **sweep** and **plot**.
 The **sweep** sub-command computes the results for different values of the given parameter **param**. It has three positional arguments:
@@ -117,11 +119,20 @@ An example of the **plot** command for the gkv43 parameter with the RMSE metric:
 $ python3 param-sweep gkv43 rmse plot
 ```
 
+<a id="sense"></a>
+#### ***sensitivity.py*** script
+
+The ***sensitivity.py*** can only be run once the parameter sweeps for every parameter at every estrus stage have been computed with a given metric. The script will plot the average value of the metric and use the standard deviation as error bars to provide an insight on how sensitive the model is for each parameter at different estrus stages. The script has one positional argument, **metric**, the metric to use for comparison (the options can be found in the [***PNP-comp.py***](#pnp) description)
+
+
 
 <a id="results"></a>
 ## Results
 Below is the plot generated from the [***PNP-comp.py***](#pnp) script using the RMSE metric to compare the simulation outputs of the pregnant model with the non-pregnant model. 
 ![alt text](fig/PNP_comp.png "Example of the plot from the PNP-comp.py script using the RMSE metric")
 
-Below is the plot generated from the [***param-sweep.py***](#sweep) script for the gkv43 parameter with the L2-norm metric which compares the simulation output of the non-pregnant model with different values of gkv43 with the default value at all stages of the estrus cycle.
-![alt text](fig/gkv43_l2_sweep.png "Example of the plot from the PNP-comp.py script using the RMSE metric")
+Below is the plot generated from the [***param-sweep.py***](#sweep) script for the gkv43 parameter with the RMSE metric which compares the simulation output of the non-pregnant model with different values of gkv43 with the default value at all stages of the estrus cycle.
+![alt text](fig/gkv43_rmse_sweep.png "Example of the plot from the param-sweep.py script for the gkv43 parameter using the RMSE metric")
+
+Below is the plot generated from the [***sensitivity.py***](#sweep) with the RMSE metric which plots the mean value of the metric and the standard deviation for each parameter sweep at every stage of the estrus.
+![alt text](fig/sensitivity.png "Example of the plot from the sensitivity.py script using the RMSE metric")
