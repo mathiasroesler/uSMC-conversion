@@ -98,8 +98,7 @@ def plotParamSweep(param, metric):
 
 
 def plotSensitivity(metric):
-	""" Plots the comparison data from different stages of the estrus for
-	a given parameter and metric
+	""" Plots the results of the sensitivity analysis for a certain metric
 
 	Arguments:
 	metric -- str, name of the used metric, {l2, rmse, mae}.
