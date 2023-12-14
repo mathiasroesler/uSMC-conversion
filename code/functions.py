@@ -8,6 +8,8 @@
 import os
 import sys
 import numpy as np
+import sklearn.metrics as skm
+
 
 # Specific values for different estrus stages
 ESTRUS = {
@@ -146,7 +148,7 @@ def computeMAE(v1, v2):
 	mae -- float, mean absolute error.
 
 	"""
-	return np.mean(np.abs(v1 - v2))
+	return skm.mean_absolute_error(v1, v2)
 
 
 def computeRMSE(v1, v2):
@@ -160,7 +162,7 @@ def computeRMSE(v1, v2):
 	rmse -- float, root mean square error
 
 	"""
-	return np.sqrt(np.mean((v1 - v2)**2))
+	return skm.mean_squared_error(v1, v2, squared=False)
 
 
 def computeComparison(v1, v2, metric):
