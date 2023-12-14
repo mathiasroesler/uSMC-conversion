@@ -32,8 +32,8 @@ if __name__ == "__main__":
 		help="value to start the sweep at")
 	sweep_subparser.add_argument("end_val", type=float, metavar="end-value",
 		help="value to end the sweep at")
-	sweep_subparser.add_argument("step", type=float,
-		 help="step size for the parameter sweep")
+	sweep_subparser.add_argument("nb_points", metavar="nb-points", type=int,
+		 help="number of points for the parameter sweep")
 	sweep_subparser.add_argument("--estrus", type=str,  default="all",
 		choices={"estrus", "metestrus", "proestrus", "diestrus", "all"}, 
 		help="estrus stage")
@@ -76,10 +76,11 @@ if __name__ == "__main__":
 
 		# Error check
 		try:
-			assert(args.end_val - args.start_val >= args.step)	
+			assert(args.nb_points > 0)
 
 		except AssertionError:
-			sys.stderr.write("Error: the step is too large\n")
+			sys.stderr.write(
+				"Error: the number of points must be greater than 0\n")
 			exit(1)
 		
 		if args.estrus == "all":
@@ -100,8 +101,7 @@ if __name__ == "__main__":
 			_, orig_states, _ = Roesler2024.solveModel(init_states, constants)
 
 			# Preset the size of the comparison points
-			values = np.arange(
-				args.start_val, args.end_val + args.step, args.step)
+			values = np.linspace(args.start_val, args.end_val, args.nb_points)
 			comp_points = np.zeros(len(values))
 
 			for i, value in enumerate(values):
