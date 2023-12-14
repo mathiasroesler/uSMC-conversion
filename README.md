@@ -97,7 +97,7 @@ The script has two sub-commands: **sweep** and **plot**.
 The **sweep** sub-command computes the results for different values of the given parameter **param**. It has three positional arguments:
 * **start-val**, the value at which to start the sweep
 * **end-val**, the value at which to end the sweep
-* **step**, the size of the increment step for the sweep
+* **nb-points**, the number of simulations to run over the range given by **end-va** - **start-val**
 
 The optional flag **--estrus** can be used to compute the sweep for a single estrus stage. The default value is all which computes the sweep for all four stages. 
 
@@ -110,9 +110,9 @@ Run the following command from inside the *code/* directory to view the help mes
 $ python3 param-sweep.py -h
 ```
 
-An example of the **sweep** command for the gkv43 parameter with the RMSE metric:
+An example of the **sweep** command for 10 values of the gkv43 parameter with the RMSE metric for all stages of the estrus cycle:
 ```bash
-$ python3 param-sweep gkv43 rmse sweep 1.2 2.6 0.14
+$ python3 param-sweep gkv43 rmse sweep 1.2 2.6 10
 ```
 
 An example of the **plot** command for the gkv43 parameter with the RMSE metric:
@@ -141,14 +141,15 @@ $ python3 PNP-comp.py rmse
 ```
 **Note:** the **-p** and **-m** flags of the [***PNP-comp.py***](#pnp) script can now be used.
 
-Use the [***param-sweep.py***](#sweep) script to run the parameter sweeps for all four parameters. The ranges provided here compute 21 simulations for each parameter at each stage using the RMSE metric:
+Use the [***param-sweep.py***](#sweep) script to run the parameter sweeps for all four parameters. The ranges provided here compute 20 simulations for each parameter at each stage using the RMSE metric:
 ```
-$ python3 param-sweep.py gcal rmse sweep 0.17 0.6 0.0215
-$ python3 param-sweep.py gna rmse sweep 0.014 0.0625 0.002425
-$ python3 param-sweep.py gkca rmse sweep 2.0 3.0 0.05
-$ python3 param-sweep.py gkv43 rmse sweep 1.2 2.6 0.07
+$ python3 param-sweep.py gcal rmse sweep 0.17 0.6 20
+$ python3 param-sweep.py gna rmse sweep 0.014 0.0625 20
+$ python3 param-sweep.py gkca rmse sweep 2.0 3.0 20
+$ python3 param-sweep.py gkv43 rmse sweep 1.2 2.6 20
 ```
-**Note:** the plot sub-command of the [***param-sweep.py***](#sweep) script can now be used.\
+**Note:** the plot sub-command of the [***param-sweep.py***](#sweep) script can now be used.
+
 Plot the sensitivity analysis results with the [***sensitivity.py***](#sense) script:
 ```
 $ python3 senstivitiy.py rmse
@@ -157,7 +158,7 @@ $ python3 senstivitiy.py rmse
 
 <a id="results"></a>
 ## Results
-Below is the plot generated from the [***PNP-comp.py***](#pnp) script using the RMSE metric to compare the simulation outputs of the pregnant model with the non-pregnant model. 
+Below is the plot generated from the [***PNP-comp.py***](#pnp) script using the RMSE metric to compare the simulation outputs of the pregnant model with the non-pregnant model. (a) proestrus, (b) estrus) (c) metestrus, and (d) diestrus. 
 ![alt text](fig/PNP_comp.png "Example of the plot from the PNP-comp.py script using the RMSE metric")
 
 Below is the plot generated from the [***param-sweep.py***](#sweep) script for the gkv43 parameter with the RMSE metric which compares the simulation output of the non-pregnant model with different values of gkv43 with the default value at all stages of the estrus cycle.
