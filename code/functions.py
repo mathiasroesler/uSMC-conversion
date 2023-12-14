@@ -8,6 +8,8 @@
 import os
 import sys
 import numpy as np
+import sklearn.metrics as skm
+
 
 # Specific values for different estrus stages
 ESTRUS = {
@@ -121,54 +123,54 @@ def setEstrusParams(constants, legend_constants, estrus):
 	return constants
 
 
-def computeL2Norm(v1, v2):
-	""" Computes the Euclidean distance between v1 and v2
+def computeL2Norm(y_true, y_pred):
+	""" Computes the Euclidean distance between y_true and y_pred
 	
 	Arguments:
-	v1 -- np.array, first vector.
-	v2 -- np.array, second vector. 
+	y_true -- np.array, ground truth values.
+	y_pred -- np.array, estimated values. 
 
 	Return:
 	l2 -- float, Euclidean distance.
 
 	"""
-	return np.linalg.norm(v1-v2)
+	return np.linalg.norm(y_true-y_pred)
 
 
-def computeMAE(v1, v2):
-	""" Computes the Mean Absolute Error between v1 and v2
+def computeMAE(y_true, y_pred):
+	""" Computes the Mean Absolute Error between y_true and y_pred
 
 	Arguments:
-	v1 -- np.array, first vector.
-	v2 -- np.array, second vector. 
+	y_true -- np.array, ground truth values.
+	y_pred -- np.array, estimated values. 
 
 	Return:
 	mae -- float, mean absolute error.
 
 	"""
-	return np.mean(np.abs(v1 - v2))
+	return skm.mean_absolute_error(y_true, y_pred)
 
 
-def computeRMSE(v1, v2):
-	""" Computes the Root Mean Squared Error between v1 and v2
+def computeRMSE(y_true, y_pred):
+	""" Computes the Root Mean Squared Error between y_true and y_pred
 
 	Arguments:
-	v1 -- np.array, first vector.
-	v2 -- np.array, second vector. 
+	y_true -- np.array, ground truth values.
+	y_pred -- np.array, estimated values. 
 
 	Return:
 	rmse -- float, root mean square error
 
 	"""
-	return np.sqrt(np.mean((v1 - v2)**2))
+	return skm.mean_squared_error(y_true, y_pred, squared=False)
 
 
-def computeComparison(v1, v2, metric):
-	""" Computes the comparison between v1 and v2 based on the metric
+def computeComparison(y_true, y_pred, metric):
+	""" Computes the comparison between y_true and y_pred based on the metric
 
 	Arguments:
-	v1 -- np.array, first vector.
-	v2 -- np.array, second vector. 
+	y_true -- np.array, ground truth values.
+	y_pred -- np.array, estimated values. 
 	metric -- str, comparison metric, {l2, rmse, mae}
 
 	Return:
@@ -177,12 +179,12 @@ def computeComparison(v1, v2, metric):
 	"""
 	match metric:
 		case "l2":
-			return computeL2Norm(v1, v2)
+			return computeL2Norm(y_true, y_pred)
 
 		case "rmse":
-			return computeRMSE(v1, v2)
+			return computeRMSE(y_true, y_pred)
 
 		case "mae":
-			return computeMAE(v1, v2)	
+			return computeMAE(y_true, y_pred)	
 
 
