@@ -58,7 +58,7 @@ def plotPNPComp(metric):
 	plt.xticks(ticks=[1, 2, 3, 4],
 		labels=[estrus.capitalize() for estrus in ESTRUS])
 
-	plt.ylabel("Normalized {} (mV)".format(LABELS[metric]))
+	plt.ylabel("Normalized {}".format(LABELS[metric]))
 	plt.show()
 
 
@@ -93,7 +93,7 @@ def plotParamSweep(param, metric):
 
 	plt.legend([estrus.capitalize() for estrus in ESTRUS])
 	plt.xlabel(PARAM[param] + r' values (pA.pF$^{-1}$)')
-	plt.ylabel("Normalized {} (mV)".format(LABELS[metric]))
+	plt.ylabel("Normalized {}".format(LABELS[metric]))
 	plt.show()
 
 
