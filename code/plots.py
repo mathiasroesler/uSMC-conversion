@@ -166,8 +166,8 @@ def plotSimulationOutput(sim_output, metric):
 	for i in range(2):
 		for j in range(2):
 			ax[i, j].plot(t, sim_output[ESTRUS[cpt]], color="black")
-			ax[i, j].text(6.4, 0, LABELS[metric] + ' ' +  "{:.2f}".format(
-				comp_points[cpt]))
+			ax[i, j].text(6.6, 1, LABELS[metric] + ' ' +  "{:.2f}".format(
+				comp_points[cpt]) + ' mV', fontsize='small')
 			ax[i, j].set_xlim([0, 10])
 			ax[i, j].set_title(ESTRUS[cpt])
 			cpt += 1
