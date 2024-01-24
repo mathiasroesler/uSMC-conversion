@@ -32,7 +32,7 @@ LABELS = {
 	"rmse": "RMSE"
 	}
 
-ESTRUS = ["proestrus", "estrus", "metestrus", "diestrus"]
+ESTRUS = ["estrus", "proestrus", "metestrus", "diestrus"]
 
 
 def plotPNPComp(metric):
