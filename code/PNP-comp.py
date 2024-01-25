@@ -11,7 +11,7 @@ import argparse
 import numpy as np
 import pickle
 import Roesler2024
-import Means2022
+import Means2023
 import functions
 import plots
 
@@ -28,7 +28,7 @@ if __name__ == "__main__":
 		help="flag used just to compute metric")
 
 	args = parser.parse_args()
-	init_states_M, constants_M = Means2022.initConsts()
+	init_states_M, constants_M = Means2023.initConsts()
 	init_states_R, constants_R = Roesler2024.initConsts()
 	_, _, _, legend_constants_R = Roesler2024.createLegends()
 
@@ -40,8 +40,8 @@ if __name__ == "__main__":
 	comp_points = np.zeros(4) # Comparison points for each stage of estrus
 
 	if not args.plot_only and not args.metric_only:
-		print("Computing Means2022 simulation")
-		_, states_M, _ = Means2022.solveModel(init_states_M, constants_M)
+		print("Computing Means2023 simulation")
+		_, states_M, _ = Means2023.solveModel(init_states_M, constants_M)
 
 		sim_output["means"] = states_M[0, :]
 
