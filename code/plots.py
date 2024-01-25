@@ -32,7 +32,7 @@ LABELS = {
 	"rmse": "RMSE"
 	}
 
-ESTRUS = ["proestrus", "estrus", "metestrus", "diestrus"]
+ESTRUS = ["estrus", "proestrus", "metestrus", "diestrus"]
 
 
 def plotPNPComp(metric):
@@ -124,7 +124,7 @@ def plotSensitivity(metric):
 
 		mean = np.mean(comp_points, axis=1)			
 		std = np.std(comp_points, axis=1)
-		_, caps, bars = ax.errorbar(values, mean, yerr=std, fmt=COLOURS[stage],
+		_, caps, bars = ax.errorbar(values+i*0.1, mean, yerr=std, fmt=COLOURS[stage],
 			linestyle='', capsize=3) 
 
 		# Change cap marker
@@ -134,7 +134,7 @@ def plotSensitivity(metric):
 	plt.legend([estrus.capitalize() for estrus in ESTRUS])
 
 	# Reset x-axis ticks
-	plt.xticks(ticks=values, labels=PARAM.values())
+	plt.xticks(ticks=values+0.15, labels=PARAM.values())
 
 	plt.xlabel("Parameters")
 	plt.ylabel("{} (mV)".format(LABELS[metric]))

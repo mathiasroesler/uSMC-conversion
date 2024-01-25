@@ -13,8 +13,8 @@ import sklearn.metrics as skm
 
 # Specific values for different estrus stages
 ESTRUS = {
-	"proestrus":{"gkv43":1.2, "stim_current":-0.5, "P4":30, "E2":80},
 	"estrus":{"gkv43":2.212, "stim_current":-0.5, "P4":14, "E2":45},
+	"proestrus":{"gkv43":1.2, "stim_current":-0.5, "P4":30, "E2":80},
 	"metestrus":{"gkv43":2.3, "stim_current":-0.25, "P4":25, "E2":43},
 	"diestrus":{"gkv43":1.4, "stim_current":-0.5, "P4":15, "E2":70}
 	}
