@@ -9,14 +9,14 @@ import argparse
 import plots
 
 if __name__ == "__main__":
-	parser = argparse.ArgumentParser(description=
-		"Plots the sensitivity analysis results")
+    parser = argparse.ArgumentParser(
+        description="Plots the sensitivity analysis results")
 
-	parser.add_argument("metric", type=str,
-		choices={"l2", "rmse", "mae"}, help="comparison metric")
+    parser.add_argument("metric", type=str,
+                        choices={"l2", "rmse", "mae"},
+                        help="comparison metric")
 
-	# Parse input arguments
-	args = parser.parse_args()
+    # Parse input arguments
+    args = parser.parse_args()
 
-	plots.plotSensitivity(args.metric)
-
+    plots.plotSensitivity(args.metric)
